@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const categoryContainer = document.querySelector(".categories");
 
     // Fetch categories from the backend and populate the UI
-    fetch("/api/categories") // Endpoint to get all categories
+    fetch("http://localhost:8080/api/categories") // Full URL to backend API
         .then(response => {
             if (!response.ok) {
                 throw new Error("Failed to fetch categories");
