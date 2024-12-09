@@ -5,7 +5,7 @@ const productForm = document.getElementById('productForm');
 const productList = document.getElementById('productItems');
 const productFormModal = document.getElementById('productFormModal');
 
-// Event listener for form submission 1
+// Event listener for form submission
 productForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -95,4 +95,24 @@ function editProduct(id) {
         .then(product => {
             document.getElementById('productId').value = product.id;
             document.getElementById('productName').value = product.name;
-            document.getElementById('productDescription').value =
+            document.getElementById('productDescription').value = product.description;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productWeight').value = product.weight;
+            document.getElementById('productQuantity').value = product.quantity;
+            document.getElementById('productImageUrl').value = product.imageUrl;
+            productFormModal.style.display = 'block';
+        });
+}
+
+// Delete a product
+function deleteProduct(id) {
+    if (confirm('Are you sure you want to delete this product?')) {
+        fetch(`${apiUrl}/${id}`, {
+            method: 'DELETE',
+        })
+            .then(() => fetchProducts()); // Refresh the product list
+    }
+}
+
+// Initial fetch of products
+fetchProducts();
