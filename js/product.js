@@ -1,66 +1,118 @@
-const API_URL = 'http://localhost:8080/api/admin-products';
+const apiUrl = 'http://localhost:8080/api/admin-products'; // Your backend API URL
 
-// Add product
-document.getElementById('product-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+// DOM elements
+const productForm = document.getElementById('productForm');
+const productList = document.getElementById('productItems');
+const productFormModal = document.getElementById('productFormModal');
 
-    const newProduct = {
-        name: document.getElementById('name').value,
-        description: document.getElementById('description').value,
-        price: parseFloat(document.getElementById('price').value),
-        weight: parseFloat(document.getElementById('weight').value),
-        quantity: parseInt(document.getElementById('quantity').value),
-        imageUrl: document.getElementById('imageUrl').value
+// Event listener for form submission
+productForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const productId = document.getElementById('productId').value;
+    const productName = document.getElementById('productName').value;
+    const productDescription = document.getElementById('productDescription').value;
+    const productPrice = document.getElementById('productPrice').value;
+    const productWeight = document.getElementById('productWeight').value;
+    const productQuantity = document.getElementById('productQuantity').value;
+    const productImageUrl = document.getElementById('productImageUrl').value;
+
+    const productData = {
+        name: productName,
+        description: productDescription,
+        price: parseFloat(productPrice),
+        weight: parseFloat(productWeight),
+        quantity: parseInt(productQuantity),
+        imageUrl: productImageUrl
     };
 
-    axios.post(API_URL, newProduct)
-        .then(response => {
-            alert('Product added successfully');
-            loadProducts(); // Reload the product list
+    if (productId) {
+        // Update product
+        fetch(`${apiUrl}/${productId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productData)
         })
-        .catch(error => {
-            console.error('There was an error adding the product!', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                closeModal();
+                fetchProducts(); // Refresh the product list
+            });
+    } else {
+        // Create new product
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                closeModal();
+                fetchProducts(); // Refresh the product list
+            });
+    }
 });
 
-// Load products
-function loadProducts() {
-    axios.get(API_URL)
-        .then(response => {
-            const products = response.data;
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = ''; // Clear existing list
+// Show modal to create or update product
+function showCreateForm() {
+    document.getElementById('productForm').reset();
+    document.getElementById('productId').value = '';
+    productFormModal.style.display = 'block';
+}
 
+// Close the modal
+function closeModal() {
+    productFormModal.style.display = 'none';
+}
+
+// Fetch and display all products
+function fetchProducts() {
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(products => {
+            productList.innerHTML = ''; // Clear the current list
             products.forEach(product => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <strong>${product.name}</strong><br>
-                    ${product.description}<br>
-                    Price: $${product.price}<br>
-                    Weight: ${product.weight} kg<br>
-                    Quantity: ${product.quantity}<br>
-                    <img src="${product.imageUrl}" width="100"><br>
+                const productItem = document.createElement('li');
+                productItem.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p><strong>Price:</strong> $${product.price}</p>
+                    <p><strong>Weight:</strong> ${product.weight} kg</p>
+                    <p><strong>Quantity:</strong> ${product.quantity}</p>
+                    <img src="${product.imageUrl}" alt="${product.name}" width="100" height="100">
+                    <button onclick="editProduct(${product.id})">Edit</button>
                     <button onclick="deleteProduct(${product.id})">Delete</button>
                 `;
-                productList.appendChild(li);
+                productList.appendChild(productItem);
             });
-        })
-        .catch(error => {
-            console.error('There was an error loading the products!', error);
         });
 }
 
-// Delete product
+// Edit a product
+function editProduct(id) {
+    fetch(`${apiUrl}/${id}`)
+        .then(response => response.json())
+        .then(product => {
+            document.getElementById('productId').value = product.id;
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productDescription').value = product.description;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productWeight').value = product.weight;
+            document.getElementById('productQuantity').value = product.quantity;
+            document.getElementById('productImageUrl').value = product.imageUrl;
+            productFormModal.style.display = 'block';
+        });
+}
+
+// Delete a product
 function deleteProduct(id) {
-    axios.delete(`${API_URL}/${id}`)
-        .then(() => {
-            alert('Product deleted successfully');
-            loadProducts(); // Reload the product list
+    if (confirm('Are you sure you want to delete this product?')) {
+        fetch(`${apiUrl}/${id}`, {
+            method: 'DELETE',
         })
-        .catch(error => {
-            console.error('There was an error deleting the product!', error);
-        });
+            .then(() => fetchProducts()); // Refresh the product list
+    }
 }
 
-// Initial load of products
-loadProducts();
+// Initial fetch of products
+fetchProducts();
