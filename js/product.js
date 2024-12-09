@@ -5,7 +5,7 @@ const productForm = document.getElementById('productForm');
 const productList = document.getElementById('productItems');
 const productFormModal = document.getElementById('productFormModal');
 
-// Event listener for form submission
+// Event listener for form submission 1
 productForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
