@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const categoryContainer = document.querySelector(".categories");
+    const categoryContainer = document.querySelector(".category-card");
 
     // Fetch categories from the backend and populate the UI
-    fetch("/api/categories") // Endpoint to get all categories
+    fetch("http://localhost:8080/api/categories") // Endpoint to get all categories
         .then(response => {
             if (!response.ok) {
                 throw new Error("Failed to fetch categories");
