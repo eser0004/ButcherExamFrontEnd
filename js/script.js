@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const categoryContainer = document.querySelector(".categories");
+    const categoryContainer = document.querySelector(".categories-grid");
 
     // Fetch categories from the backend and populate the UI
-    fetch("/api/categories") // Endpoint to get all categories
+    fetch("http://localhost:8080/api/categories") // Endpoint to get all categories
         .then(response => {
             if (!response.ok) {
                 throw new Error("Failed to fetch categories");
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             card.className = "category-card";
             card.setAttribute("data-category", category.name);
             card.innerHTML = `
-                <h3>${category.name}</h3>
+                <h2>${category.name}</h2>
                 <p>${category.description}</p>
                 <img src="${category.imageUrl}" alt="${category.name}">
             `;
@@ -40,34 +40,5 @@ document.addEventListener("DOMContentLoaded", () => {
         // Navigate to a specific category page or show details
         const categoryUrl = `/categories/${category.name.toLowerCase()}`;
         window.location.href = categoryUrl;
-
-        // Optional: Fetch and display detailed data in a modal or new section
-        /*
-        fetch(`/api/categories/${category.id}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch details for ${category.name}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                displayCategoryDetails(data);
-            })
-            .catch(error => {
-                console.error("Error fetching category details:", error);
-            });
-        */
-    }
-
-    // Optional function to display details dynamically
-    function displayCategoryDetails(data) {
-        const detailsSection = document.querySelector("#category-details");
-        if (detailsSection) {
-            detailsSection.innerHTML = `
-                <h2>${data.name}</h2>
-                <p>${data.description}</p>
-                <img src="${data.imageUrl}" alt="${data.name}" />
-            `;
-        }
     }
 });

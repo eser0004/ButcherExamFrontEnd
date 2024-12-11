@@ -1,0 +1,128 @@
+/* Generelle stilarter */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5dc;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header-stilarter */
+header {
+    background-color: #e3c09c;
+    padding: 20px;
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .nav-links li {
+    margin: 0 15px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.navbar .nav-links a:hover {
+    color: #555;
+}
+
+/* Hero sektion */
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #fff7e6;
+    flex: 1;
+}
+
+.hero h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.hero p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.hero .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.hero .btn:hover {
+    background-color: #555;
+}
+
+/* Funktionaliteter */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.feature {
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+}
+
+.feature img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.feature h2 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.feature p {
+    font-size: 1em;
+    color: #666;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #e3c09c;
+    padding: 10px;
+    margin-top: auto;
+}
