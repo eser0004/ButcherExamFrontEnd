@@ -1,12 +1,16 @@
 /* General Styles */
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%; /* Ensure the body takes up the full height of the viewport */
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
     background-color: #f5f5dc;
     color: #333;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Header */
 header {
     text-align: center;
     background-color: #e3c09c;
@@ -22,9 +26,13 @@ p {
 }
 
 /* Grid Layout */
+main {
+    flex: 1; /* This makes the main content area expand to fill available space */
+}
+
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust the column width */
     gap: 20px;
     padding: 20px;
 }
@@ -39,6 +47,8 @@ p {
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
+    max-width: 300px; /* Set a maximum width for the category cards */
+    margin: 0 auto; /* Center the cards horizontally */
 }
 
 .category-card:hover {
@@ -47,19 +57,21 @@ p {
 }
 
 .category-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
+    width: 100%; /* Make the image fill the entire width of the card */
+    height: 200px; /* Increase the height of the image */
+    object-fit: cover; /* Ensures the image fills the area without distortion */
+    border-bottom: 2px solid #ddd; /* Optional: add a border between the image and title */
 }
 
 .category-card h2 {
     margin: 10px 0;
+    color: #333;
 }
 
 /* Footer */
 footer {
-    text-align: center;
     background-color: #e3c09c;
     padding: 10px;
+    text-align: center;
     margin-top: 20px;
 }
