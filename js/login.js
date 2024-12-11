@@ -19,7 +19,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
             const result = await response.text();
             message.textContent = result; // Display "Login successful"
             message.style.color = "green";
-            window.location.href = "adminpage.html"; // Redirect to the admin dashboard
+            window.location.href = "../adminpage.html"; // Redirect to the admin dashboard
         } else {
             const errorText = await response.text();
             message.textContent = errorText; // Display "Invalid credentials"
